@@ -1,0 +1,29 @@
+@theme {
+  --background-image-grid-pattern:
+    linear-gradient(to right, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+
+  --color-primary: #004493;
+  --color-secondary: #0c6a9e;
+  --color-header: #e7f1ff;
+  --color-button: #0369a1;
+  --color-orange: #ff835d;
+  --color-primary-bg: #0369a1;
+  --color-dropdownitem: #1967d2;
+  --color-blue: #0d6efd;
+}
+
+.bg-auth-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(135deg, #10182b, #0d496c);
+  background-size:
+    42px 42px,
+    42px 42px,
+    100% 100%;
+}
+
+.bg-button-primary {
+  background: linear-gradient(to right, #30a6dd, #0369a1);
+}
