@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model answers {
+  id                 Int                  @id @default(autoincrement())
+  question_id        Int?
+  content            String
+  is_correct         Boolean?             @default(false)
+  participant_answer participant_answer[]
+}
+
+model categories {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(100)
+  teacher_id Int?
+  is_global  Boolean?    @default(false)
+  create_at  DateTime?   @default(now()) @db.Timestamp(6)
+  users      users?      @relation(fields: [teacher_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  exams      exams[]
+  questions  questions[]
+}
+
+model class_student {
+  class_id   Int
+  student_id Int
+  joined_at  DateTime? @default(now()) @db.Timestamp(6)
+  classes    classes   @relation(fields: [class_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users     @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([class_id, student_id])
+}
+
+model classes {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(100)
+  teacher_id      Int?
+  created_at      DateTime?         @default(now()) @db.Timestamp(6)
+  class_student   class_student[]
+  users           users?            @relation(fields: [teacher_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  session_classes session_classes[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model exam_participants {
+  id                 Int                  @id @default(autoincrement())
+  session_id         Int?
+  student_id         Int?
+  status             String?              @default("Chưa làm") @db.VarChar(50)
+  violation_count    Int?                 @default(0)
+  score              Decimal?             @db.Decimal(5, 2)
+  start_at           DateTime?            @db.Timestamp(6)
+  submitted_at       DateTime?            @db.Timestamp(6)
+  attempt_number     Int?                 @default(1)
+  exam_sessions      exam_sessions?       @relation(fields: [session_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users              users?               @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  participant_answer participant_answer[]
+
+  @@unique([session_id, student_id, attempt_number])
+}
+
+model exam_sessions {
+  id                Int                 @id @default(autoincrement())
+  teacher_id        Int?
+  exam_id           Int?
+  name              String              @db.VarChar(100)
+  password          String?             @db.VarChar(50)
+  start_time        DateTime            @default(now()) @db.Timestamp(6)
+  end_time          DateTime            @default(now()) @db.Timestamp(6)
+  show_answers      Boolean?            @default(false)
+  is_shuffled       Boolean?            @default(false)
+  note              String?
+  max_attempts      Int?                @default(1)
+  exam_participants exam_participants[]
+  exams             exams?              @relation(fields: [exam_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users             users?              @relation(fields: [teacher_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  session_classes   session_classes[]
+}
+
+model exams {
+  id            Int             @id @default(autoincrement())
+  teacher_id    Int?
+  category_id   Int?
+  name          String          @db.VarChar(100)
+  is_public     Boolean?        @default(false)
+  create_at     DateTime?       @default(now()) @db.Timestamp(6)
+  duration      Int
+  exam_sessions exam_sessions[]
+  categories    categories?     @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users         users?          @relation(fields: [teacher_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  questions     questions[]
+}
+
+model participant_answer {
+  id                Int                @id @default(autoincrement())
+  participant_id    Int?
+  answer_id         Int?
+  question_id       Int?
+  is_correct        Boolean?           @default(false)
+  answers           answers?           @relation(fields: [answer_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  exam_participants exam_participants? @relation(fields: [participant_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  questions         questions?         @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model questions {
+  id                 Int                  @id @default(autoincrement())
+  category_id        Int?
+  teacher_id         Int?
+  level              String?              @db.VarChar(50)
+  content            String
+  create_at          DateTime?            @default(now()) @db.Timestamp(6)
+  points             Decimal?             @default(0) @db.Decimal(5, 2)
+  exam_id            Int?
+  participant_answer participant_answer[]
+  categories         categories?          @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  exams              exams?               @relation(fields: [exam_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users              users?               @relation(fields: [teacher_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model session_classes {
+  session_id    Int
+  class_id      Int
+  classes       classes       @relation(fields: [class_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  exam_sessions exam_sessions @relation(fields: [session_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([session_id, class_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model users {
+  id                Int                 @id @default(autoincrement())
+  email             String              @unique @db.VarChar(100)
+  password          String              @db.VarChar(255)
+  first_name        String?             @db.VarChar(10)
+  last_name         String?             @db.VarChar(50)
+  phone             String?             @unique(map: "unique_phone") @db.VarChar(10)
+  role              String?             @db.VarChar(20)
+  birthday          DateTime?           @db.Date
+  gender            String?             @db.VarChar(10)
+  categories        categories[]
+  class_student     class_student[]
+  classes           classes[]
+  exam_participants exam_participants[]
+  exam_sessions     exam_sessions[]
+  exams             exams[]
+  questions         questions[]
+}

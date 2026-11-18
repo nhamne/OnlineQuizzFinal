@@ -2,7 +2,7 @@
   <div class="w-full">
     <VueDatePicker
       v-model="date"
-      :enable-time-picker="false"
+      :time-config="{ enableTimePicker: props.enableTimePicker }"
       auto-apply
       format="dd/MM/yyyy"
       :placeholder="placeholder"
@@ -32,7 +32,17 @@ import { VueDatePicker } from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import Icon from './Icon.vue'
 
-const props = defineProps<{ placeholder?: string }>()
+const props = withDefaults(
+  defineProps<{
+    modelValue?: any
+    placeholder?: string
+    enableTimePicker?: boolean
+  }>(),
+  {
+    enableTimePicker: true,
+  },
+)
+
 // Biến lưu trữ giá trị ngày (Mặc định lấy ngày hôm nay)
-const date = ref<Date | null>(null)
+const date = ref<Date | null>(props.modelValue)
 </script>

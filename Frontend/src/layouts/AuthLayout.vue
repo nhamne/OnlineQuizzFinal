@@ -19,6 +19,7 @@
         >
       </div>
     </div>
+
     <div class="flex justify-center items-center w-1/2 h-screen">
       <router-view></router-view>
     </div>
@@ -30,6 +31,7 @@ import Icon from '@/components/custom/Icon.vue'
 import { ref, provide, computed } from 'vue'
 
 const currentRole = ref<'student' | 'teacher'>('student')
+
 provide('authrole', currentRole)
 
 const layoutContent = computed(() => {

@@ -4,30 +4,44 @@
     <slot name="button" :toggle="toggleDropdown" :isOpen="isOpenFilter" :label="renderItem">
       <div
         @click="toggleDropdown"
-        class="flex items-center justify-between p-2 border mt-2 cursor-pointer border-gray-300 rounded-lg bg-primary/5"
+        :class="
+          isOpenFilter == true
+            ? 'border-blue-500 shadow-[0_0_0_3px_rgba(59,130,246,0.1),0_0_20px_rgba(59,130,246,0.15)]'
+            : 'border-gray-300'
+        "
+        class="flex items-center justify-between p-2 border mt-2 cursor-pointer rounded-lg bg-white"
       >
-        <span>{{ renderItem }}</span>
-        <Icon name="chevron-down" :custom-class="isOpenFilter ? 'rotate-180' : ''" />
+        <div class="flex items-center gap-2 overflow-hidden mr-1 min-w-0">
+          <Icon v-if="icon" :name="icon" size="20" class="shrink-0"></Icon>
+          <span class="truncate text-[15px] font-normal text-gray-500 shrink-0">{{
+            renderItem
+          }}</span>
+        </div>
+        <Icon
+          name="chevron-down"
+          class="shrink-0"
+          :custom-class="isOpenFilter ? 'rotate-180' : ''"
+        />
       </div>
     </slot>
     <div
       v-if="isOpenFilter"
-      class="absolute z-50 mt-2 w-full bg-white shadow-lg rounded-md border border-gray-300"
+      class="absolute z-50 mt-2 w-full min-w-[150px] right-0 bg-white shadow-lg rounded-md border border-gray-300 overflow-hidden"
       :class="menuClass"
     >
       <div
         v-for="item in list"
         :key="item.key"
         @click="handleSelect(item.key)"
-        class="px-4 py-2 hover:bg-primary/10 hover:text-black transition-colors duration-200 cursor-pointer flex items-center gap-2"
+        class="px-4 py-2 hover:bg-primary/10 hover:text-black transition-colors duration-200 cursor-pointer flex items-center gap-2 min-w-0"
         :class="
           renderItem === item.name && props.type === 'filter' ? 'bg-dropdownitem! text-white!' : ''
         "
       >
         <slot name="icon">
-          <Icon v-if="item.icon" :name="item.icon" size="18"></Icon>
+          <Icon v-if="item.icon" :name="item.icon" size="18" class="shrink-0"></Icon>
         </slot>
-        <span class="text-base whitespace-nowrap">{{ item.name }}</span>
+        <span class="text-base truncate min-w-0" :title="item.name">{{ item.name }}</span>
       </div>
     </div>
   </div>
@@ -42,6 +56,7 @@ const props = withDefaults(
     list: any[] //list là 1 mảng dữ liệu truyền vào
     menuClass?: string
     type?: 'filter' | 'action'
+    icon?: string
   }>(),
   {
     type: 'filter',

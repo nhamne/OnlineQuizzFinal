@@ -1,86 +1,114 @@
 <template>
-  <div class="w-full h-full flex flex-col gap-10">
-    <div class="w-full flex justify-between items-center">
+  <div class="w-full h-full pb-8 sm:pb-10">
+    <div class="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
       <div class="flex flex-col gap-1">
-        <span class="text-3xl font-semibold text-primary-bg">Quản lý đề thi</span>
-        <p class="text-sm">Lưu trữ và quản lý hệ thống đề thi tập trung.</p>
+        <span class="text-2xl sm:text-3xl font-semibold text-primary-bg">Danh sách đề thi</span>
+        <p class="text-xs sm:text-sm text-gray-500">Lưu trữ và quản lý hệ thống đề thi tập trung.</p>
       </div>
-      <div class="flex gap-3">
-        <Button icon="plus" @click="router.push('/teacher/exam-manage/create-exam')"
-          >Tạo đề thi mới</Button
-        >
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full lg:w-auto">
         <Button
-          variant="secondary"
-          icon="magic"
-          @click="router.push('/teacher/exam-manage/create-exam-file')"
-          >Tạo đề thi từ file</Button
+          icon="plus"
+          class="w-full sm:w-auto"
+          @click="router.push('/teacher/exam-manage/create-exam')"
         >
-      </div>
-    </div>
-    <div
-      class="w-full grid grid-cols-[2fr_2fr_2fr_1.2fr_auto] gap-4 p-4 bg-white rounded-xl border border-gray-200 shadow-sm"
-    >
-      <!-- Tìm kiếm -->
-
-      <div>
-        <span class="text-[13px] font-semibold uppercase">Tìm kiếm đề thi</span>
-        <Search placeholder="Tìm kiếm đề thi" class="w-full" />
-      </div>
-      <!--Lọc theo môn học-->
-      <div>
-        <span class="text-[13px] font-semibold uppercase">Lọc theo môn học</span>
-        <DropdownFilter v-model="selecedSubject" :list="listSubject" />
-      </div>
-      <!--Lọc theo trạng thái -->
-      <div>
-        <span class="text-[13px] font-semibold uppercase">Lọc trạng thái</span>
-        <DropdownFilter v-model="selecedStatus" :list="listStatus" />
-      </div>
-      <!--Cấu hình-->
-
-      <div class="flex items-center mt-auto w-full">
-        <div
-          class="relative flex items-center border border-gray-300 bg-primary/5 h-10.5 rounded-lg w-full"
-        >
-          <button
-            class="flex-1 flex items-center gap-2 justify-center h-full hover:bg-white hover:text-primary/80 transition-colors duration-200 cursor-pointer rounded-l-lg"
+          Tạo đề thi thủ công
+        </Button>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <Button
+            variant="secondary"
+            icon="magic"
+            class="flex-1 sm:w-auto text-xs sm:text-sm whitespace-nowrap"
+            @click="router.push('/teacher/exam-manage/create-exam-file')"
           >
-            <Icon name="download" size="20"></Icon>
-            <span class="text-sm font-medium">Export file</span>
-          </button>
-          <!-- <button
-            class="flex items-center justify-center border-l px-3 py-2.5 bg-primary/5 border-gray-300 hover:bg-white hover:text-primary/80 transition-colors duration-200 cursor-pointer"
+            <span class="hidden sm:inline">Tạo đề thi </span>từ file
+          </Button>
+          <Button
+            variant="secondary"
+            icon="database"
+            class="flex-1 sm:w-auto text-xs sm:text-sm whitespace-nowrap"
+            @click="router.push('/teacher/exam-manage/create-exam-question')"
           >
-            <Icon name="settings" size="20"></Icon>
-          </button> -->
-          <DropdownFilter
-            class="h-full static!"
-            type="action"
-            v-model="selecedSetting"
-            :list="listConfig"
-            menu-class="left-0 top-full"
-          >
-            <template #button="{ toggle, isOpen }">
-              <div
-                @click="toggle"
-                class="flex items-center justify-center border-l border-gray-300 px-2 hover:bg-white hover:text-primary/80 transition-colors duration-200 cursor-pointer rounded-r-lg h-full"
-              >
-                <Icon name="settings" size="20"></Icon>
-              </div>
-            </template>
-          </DropdownFilter>
+            <span class="hidden sm:inline">Tạo </span>từ ngân hàng<span class="hidden sm:inline"> câu hỏi</span>
+          </Button>
         </div>
       </div>
-      <Button variant="secondary" custom-class="w-fit h-[42px] mt-auto">
-        <Icon name="reload" size="20"></Icon>
-      </Button>
     </div>
-    <!--Bảng danh sách đề thi-->
-    <div class="overflow-x-auto shadow-lg rounded-2xl border border-gray-200">
-      <table class="w-full text-left overflow-hidden bg-white">
+
+    <!-- Thanh tìm kiếm & lọc & hành động -->
+    <div class="mt-4 sm:mt-6 w-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
+      <!-- Row 1 trên mobile: Tìm kiếm + Nút reload -->
+      <div class="flex items-center gap-2 flex-1 min-w-0">
+        <Search placeholder="Tìm kiếm đề thi..." class="flex-1 min-w-0" />
+        <Button
+          variant="secondary"
+          custom-class="w-[42px] h-[42px] p-0 shrink-0 mt-2 flex items-center justify-center sm:hidden"
+        >
+          <Icon name="reload" size="20"></Icon>
+        </Button>
+      </div>
+
+      <!-- Row 2 trên mobile: Lọc môn + Lọc trạng thái + Export/Settings + Reload trên desktop -->
+      <div class="flex items-center gap-2 shrink-0">
+        <DropdownFilter
+          icon="book"
+          class="flex-1 sm:w-40 lg:w-44 shrink-0 min-w-0"
+          v-model="selecedSubject"
+          :list="listSubject"
+        />
+        <DropdownFilter
+          icon="clock"
+          class="flex-1 sm:w-36 lg:w-40 shrink-0 min-w-0"
+          v-model="selecedStatus"
+          :list="listStatus"
+        />
+
+        <!-- Export & Settings -->
+        <div class="flex items-center mt-2 shrink-0">
+          <div
+            class="relative flex items-center border border-gray-300 bg-primary/5 h-10.5 rounded-lg"
+          >
+            <button
+              class="px-3 sm:px-4 flex items-center gap-1.5 justify-center h-full bg-white hover:bg-white/60 hover:text-primary/80 transition-colors duration-200 cursor-pointer rounded-l-lg"
+              title="Xuất file"
+            >
+              <Icon name="download" size="20"></Icon>
+              <span class="text-sm font-medium hidden md:inline">Export file</span>
+            </button>
+            <DropdownFilter
+              class="h-full static!"
+              type="action"
+              v-model="selecedSetting"
+              :list="listConfig"
+              menu-class="!w-max !min-w-[195px] [&_span]:whitespace-nowrap right-0 top-full"
+            >
+              <template #button="{ toggle, isOpen }">
+                <div
+                  @click="toggle"
+                  class="flex items-center justify-center border-l border-gray-300 px-3 bg-white hover:bg-white/60 hover:text-primary/80 transition-colors duration-200 cursor-pointer rounded-r-lg h-full"
+                >
+                  <Icon name="settings" size="20"></Icon>
+                </div>
+              </template>
+            </DropdownFilter>
+          </div>
+        </div>
+
+        <!-- Reload trên màn hình sm trở lên -->
+        <Button
+          variant="secondary"
+          custom-class="w-[42px] h-[42px] p-0 shrink-0 mt-2 hidden sm:flex items-center justify-center"
+        >
+          <Icon name="reload" size="20"></Icon>
+        </Button>
+      </div>
+    </div>
+
+    <!-- Bảng danh sách đề thi -->
+    <div class="mt-6 sm:mt-8 overflow-x-auto shadow-lg rounded-2xl border border-gray-200 bg-white">
+      <table class="w-full min-w-[620px] text-left">
         <thead>
-          <tr class="uppercase text-xs [&>th]:p-4">
-            <th class="w-12 p-4 text-center">
+          <tr class="uppercase text-xs text-gray-500 [&>th]:px-4 [&>th]:py-3.5 whitespace-nowrap bg-gray-50/70 border-b border-gray-200">
+            <th class="w-12 text-center">
               <input
                 type="checkbox"
                 class="w-4 h-4 cursor-pointer accent-primary rounded border-gray-300"
@@ -96,24 +124,25 @@
           <tr
             v-for="item in listExam"
             :key="item.id"
-            class="[&>td]:px-4 [&>td]:py-2 border-t border-gray-100 hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+            @click="router.push(`/teacher/exam-manage/${item.id}`)"
+            class="[&>td]:px-4 [&>td]:py-3 border-t border-gray-100 hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
           >
-            <td class="w-12 p-4 text-center">
+            <td class="w-12 text-center" @click.stop>
               <input
                 type="checkbox"
                 class="w-4 h-4 cursor-pointer accent-primary rounded border-gray-300"
               />
             </td>
             <td>
-              <div class="flex flex-col gap-1">
-                <span class="text-black/80 text-base font-semibold">{{ item.nameExam }}</span>
-                <span class="text-gray-400 text-xs uppercase">Thời gian thi: {{ item.time }}</span>
+              <div class="flex flex-col gap-0.5">
+                <span class="text-black/80 text-sm sm:text-base font-semibold whitespace-nowrap">{{ item.nameExam }}</span>
+                <span class="text-gray-400 text-[11px] sm:text-xs uppercase whitespace-nowrap">Thời gian thi: {{ item.time }}</span>
               </div>
             </td>
-            <td class="text-sm text-gray-400 font-normal">{{ item.nameSubject }}</td>
-            <td>
+            <td class="text-sm text-gray-600 font-normal whitespace-nowrap">{{ item.nameSubject }}</td>
+            <td class="whitespace-nowrap">
               <span
-                class="px-2 py-1 rounded-full text-[10px] uppercase font-semibold"
+                class="px-2.5 py-1 rounded-full text-[11px] uppercase font-semibold whitespace-nowrap"
                 :class="
                   item.status === 'Xuất bản'
                     ? ' bg-green-100/80 text-green-700 '
@@ -122,36 +151,54 @@
                 >{{ item.status }}</span
               >
             </td>
-            <td>
+            <td class="whitespace-nowrap">
               <div class="flex justify-end items-center gap-3">
-                <Icon name="eye" size="18"></Icon>
-                <!-- <Icon name="edit" size="18"></Icon> -->
-                <Icon name="copy" size="18"></Icon>
-                <Icon @click="handleDeleteExam(item.id)" name="trash" size="18"></Icon>
+                <button
+                  type="button"
+                  @click.stop="router.push(`/teacher/exam-manage/${item.id}`)"
+                  class="text-gray-500 hover:text-primary transition-colors cursor-pointer"
+                  title="Xem chi tiết đề thi"
+                >
+                  <Icon name="eye" size="18"></Icon>
+                </button>
+                <button
+                  type="button"
+                  @click.stop
+                  class="text-gray-500 hover:text-primary transition-colors cursor-pointer"
+                  title="Sao chép"
+                >
+                  <Icon name="copy" size="18"></Icon>
+                </button>
+                <button type="button" @click.stop="handleDeleteExam(item.id)" class="text-gray-500 hover:text-red-500 transition-colors cursor-pointer" title="Xóa">
+                  <Icon name="trash" size="18"></Icon>
+                </button>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+
     <PopupConfirm
       v-model="isOpen"
+      variant="warning"
       :message="`Bạn có chắc chắn muốn xóa đề thi ${nameExam} không?`"
       title="Xóa đề thi"
     ></PopupConfirm>
-    <!--Tổng quan trang-->
-    <div class="grid grid-cols-3 gap-5">
-      <div class="flex flex-col gap-2 bg-white p-5 rounded-2xl shadow-sm border border-gray-200">
-        <span class="text-bases text-gray-600">Tổng đề thi: </span>
-        <span class="text-black/80 font-bold text-xl">100</span>
+
+    <!-- Tổng quan trang -->
+    <div class="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5">
+      <div class="flex flex-col gap-1 sm:gap-2 bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-200">
+        <span class="text-sm sm:text-base text-gray-600">Tổng đề thi: </span>
+        <span class="text-black/80 font-bold text-xl sm:text-2xl">100</span>
       </div>
-      <div class="flex flex-col gap-2 bg-white p-5 rounded-2xl shadow-sm border border-gray-200">
-        <span class="text-bases text-gray-600">Phổ biến nhất: </span>
-        <span class="text-black/80 font-bold text-xl">Toán</span>
+      <div class="flex flex-col gap-1 sm:gap-2 bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-200">
+        <span class="text-sm sm:text-base text-gray-600">Phổ biến nhất: </span>
+        <span class="text-black/80 font-bold text-xl sm:text-2xl">Toán</span>
       </div>
-      <div class="flex flex-col gap-2 bg-white p-5 rounded-2xl shadow-sm border border-gray-200">
-        <span class="text-bases text-gray-600">Tổng số câu hỏi: </span>
-        <span class="text-black/80 font-bold text-xl">100</span>
+      <div class="flex flex-col gap-1 sm:gap-2 bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-200">
+        <span class="text-sm sm:text-base text-gray-600">Tổng số câu hỏi: </span>
+        <span class="text-black/80 font-bold text-xl sm:text-2xl">100</span>
       </div>
     </div>
   </div>

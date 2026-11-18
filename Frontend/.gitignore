@@ -1,5 +1,23 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.yarn/
+
+# Environment Variables (Chứa biến môi trường bảo mật)
+.env
+.env.*
+.env.local
+.env.*.local
+!.env.example
+!.env.*.example
+
+# Production & Build outputs
+dist/
+dist-ssr/
+.vite/
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,33 +25,40 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Testing & Coverage
+coverage/
+/cypress/videos/
+/cypress/screenshots/
+__screenshots__/
+
+# Caches & Temp
+*.tsbuildinfo
+.eslintcache
+.prettiercache
+.stylelintcache
+*.timestamp-*-*.mjs
+.temp/
+.tmp/
+
+# OS files
 .DS_Store
-dist
-dist-ssr
-coverage
-*.local
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+!.vscode/settings.json
+!.vscode/launch.json
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
-*.tsbuildinfo
-
-.eslintcache
-
-# Cypress
-/cypress/videos/
-/cypress/screenshots/
-
-# Vitest
-__screenshots__/
-
-# Vite
-*.timestamp-*-*.mjs
+*.sublime-workspace
+*.sublime-project

@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, inject } from 'vue'
+import { type Ref, inject } from 'vue'
 
 const currentRole = inject<Ref<'student' | 'teacher'>>('authrole')
 </script>

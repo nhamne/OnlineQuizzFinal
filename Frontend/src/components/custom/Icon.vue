@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const mergedClasses = computed(() => {
   return twMerge(
-    'inline-flex items-center justify-center transition-transform duration-300 ease-in-out cursor-pointer',
+    'inline-flex items-center justify-center transition-transform duration-300 ease-in-out ',
     props.customClass,
   )
 })

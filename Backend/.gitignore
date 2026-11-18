@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.yarn/
+
+# Environment Variables (Chứa mật khẩu Database, JWT Secret...)
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build & Runtime
+dist/
+build/
+
+# Uploads & Temp
+uploads/
+temp/
+tmp/
+.temp/
+.tmp/
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+# IDE & Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+*.sw?
+*.sublime-workspace
+*.sublime-project

@@ -1,81 +1,86 @@
 <template>
-  <div class="w-full h-full flex flex-col gap-10">
+  <div class="w-full h-full flex flex-col gap-6 sm:gap-8 lg:gap-10 pb-8 sm:pb-10">
     <!-- Header -->
-    <div class="w-full flex rounded-3xl shadow overflow-hidden relative z-0">
+    <div class="w-full flex rounded-2xl sm:rounded-3xl shadow overflow-hidden relative z-0">
       <div class="bg-[#085D96]/85 absolute inset-0 z-10"></div>
-      <div class="flex flex-col flex-1 items-start justify-center gap-7 px-10 py-20 relative z-10">
+      <div
+        class="flex flex-col flex-1 items-start justify-center gap-4 sm:gap-6 lg:gap-7 px-5 py-8 sm:px-8 sm:py-14 lg:px-10 lg:py-20 relative z-10"
+      >
         <h1 class="text-4xl font-bold text-white">Chào {{ timeOfDay }}, Học viên</h1>
         <p class="text-white font-medium text-lg">
           Đây là nơi bạn theo dõi tiến độ học tập, điểm số trung bình và các kết quả thi gần đây.
         </p>
       </div>
       <img
-        class="absolute right-0 bottom-0 h-full w-150 object-cover z-0"
+        class="absolute right-0 bottom-0 h-full w-48 sm:w-80 md:w-110 lg:w-150 object-cover z-0 opacity-40 sm:opacity-70 lg:opacity-100"
         src="https://img.meta.com.vn/Data/image/2021/09/22/anh-meo-cute-de-thuong-dang-yeu-16.jpg"
         alt=""
       />
     </div>
     <div
-      class="grid gap-8 px-10 -mt-22.5 relative z-50"
-      style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-2 sm:px-6 lg:px-10 mt-0 sm:-mt-10 md:-mt-14 lg:-mt-16 xl:-mt-20 relative z-20"
     >
       <router-link
         to="/student/join-class"
-        class="group flex items-center gap-4 bg-white/70 backdrop-blur-md p-6 shadow-md rounded-xl hover:-translate-y-1 transition-all duration-200 cursor-pointer select-none"
+        class="group flex items-center gap-3 sm:gap-4 bg-white/90 sm:bg-white/70 backdrop-blur-md p-4 sm:p-5 lg:p-6 shadow-md rounded-xl hover:-translate-y-1 transition-all duration-200 cursor-pointer select-none"
       >
         <div
-          class="bg-primary/20 flex items-center justify-center p-2 rounded-lg text-secondary group-hover:bg-secondary group-hover:text-white transition-all duration-200"
+          class="bg-primary/20 flex items-center justify-center p-2 rounded-lg text-secondary group-hover:bg-secondary group-hover:text-white transition-all duration-200 shrink-0"
         >
           <Icon name="plus-circle" size="24"></Icon>
         </div>
-        <div class="flex flex-col">
-          <span class="font-semibold text-lg text-black/90">Tham gia lớp học</span>
-          <span class="font-normal text-sm text-black/60">Nhập mã định danh lớp</span>
+        <div class="flex flex-col min-w-0">
+          <span class="font-semibold text-lg text-black/90 truncate">Tham gia lớp học</span>
+          <span class="font-normal text-sm text-black/60 truncate">Nhập mã định danh lớp</span>
         </div>
       </router-link>
       <router-link
         to="/student/my-sessions"
-        class="group flex items-center gap-4 bg-white/70 backdrop-blur-md p-6 shadow-md rounded-xl cursor-pointer hover:-translate-y-1 transition-all duration-200 select-none"
+        class="group flex items-center gap-3 sm:gap-4 bg-white/90 sm:bg-white/70 backdrop-blur-md p-4 sm:p-5 lg:p-6 shadow-md rounded-xl cursor-pointer hover:-translate-y-1 transition-all duration-200 select-none"
       >
         <div
-          class="bg-green-700/20 text-green-700/90 flex items-center justify-center p-2 rounded-lg group-hover:bg-green-700 group-hover:text-white transition-all duration-200"
+          class="bg-green-700/20 text-green-700/90 flex items-center justify-center p-2 rounded-lg group-hover:bg-green-700 group-hover:text-white transition-all duration-200 shrink-0"
         >
           <Icon name="play-circle" size="24"></Icon>
         </div>
-        <div class="flex flex-col">
-          <span class="font-semibold text-lg text-black/90">Ca thi đang diễn ra</span>
-          <span class="font-normal text-sm text-black/60">Làm bài thi trực tuyến</span>
+        <div class="flex flex-col min-w-0">
+          <span class="font-semibold text-lg text-black/90 truncate">Ca thi đang diễn ra</span>
+          <span class="font-normal text-sm text-black/60 truncate">Làm bài thi trực tuyến</span>
         </div>
       </router-link>
       <router-link
         to="/student/results"
-        class="group flex items-center gap-4 bg-white/70 backdrop-blur-md p-6 shadow-md rounded-xl cursor-pointer hover:-translate-y-1 transition-all duration-200 select-none"
+        class="group flex items-center gap-3 sm:gap-4 bg-white/90 sm:bg-white/70 backdrop-blur-md p-4 sm:p-5 lg:p-6 shadow-md rounded-xl cursor-pointer hover:-translate-y-1 transition-all duration-200 select-none sm:col-span-2 lg:col-span-1"
       >
         <div
-          class="bg-yellow-700/20 text-yellow-700/90 flex items-center justify-center p-2 rounded-lg group-hover:bg-yellow-700 group-hover:text-white transition-all duration-200"
+          class="bg-yellow-700/20 text-yellow-700/90 flex items-center justify-center p-2 rounded-lg group-hover:bg-yellow-700 group-hover:text-white transition-all duration-200 shrink-0"
         >
           <Icon name="star" size="24"></Icon>
         </div>
-        <div class="flex flex-col">
-          <span class="font-semibold text-lg text-black/90">Xem kết quả thi</span>
-          <span class="font-normal text-sm text-black/60">Thống kê điểm số kỳ thi</span>
+        <div class="flex flex-col min-w-0">
+          <span class="font-semibold text-lg text-black/90 truncate">Xem kết quả thi</span>
+          <span class="font-normal text-sm text-black/60 truncate">Thống kê điểm số kỳ thi</span>
         </div>
       </router-link>
     </div>
-    <div class="grid grid-cols-[3fr_1.5fr] gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-[3fr_1.5fr] gap-6 lg:gap-8">
       <!--Tiến độ học tập -->
-      <div class="w-full h-full grid grid-cols-1 gap-10">
-        <div class="bg-white shadow-sm rounded-3xl p-8">
+      <div class="w-full h-full grid grid-cols-1 gap-6 sm:gap-8 lg:gap-10">
+        <div class="bg-white shadow-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8">
           <!--header-->
-          <div class="flex">
-            <div class="flex flex-1 flex-col gap-1">
-              <span class="text-xl text-black/80 font-bold">Tiến độ học tập</span>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+            <div class="flex flex-1 flex-col gap-1 min-w-0">
+              <span class="text-xl text-black/80 font-bold truncate">Tiến độ học tập</span>
               <span class="text-sm text-black/60">Phổ điểm qua các ca thi gần nhất</span>
             </div>
-            <DropdownFilter class="w-65" v-model="selecedClass" :list="listClass"></DropdownFilter>
+            <DropdownFilter
+              class="w-full sm:w-65 shrink-0"
+              v-model="selecedClass"
+              :list="listClass"
+            ></DropdownFilter>
           </div>
           <!--Biểu đồ-->
-          <div class="relative w-full h-75">
+          <div class="relative w-full h-75 mt-4">
             <apexchart
               type="area"
               height="300"
@@ -84,9 +89,9 @@
             ></apexchart>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-10">
           <div
-            class="group flex flex-col justify-between items-start px-5 py-10 bg-primary/5 shadow-md rounded-3xl cursor-pointer border-2 border-secondary/20 text-primary hover:bg-primary/90 hover:text-white transition-all duration-300"
+            class="group flex flex-col justify-between items-start p-5 sm:p-6 lg:py-10 bg-primary/5 shadow-md rounded-2xl sm:rounded-3xl cursor-pointer border-2 border-secondary/20 text-primary hover:bg-primary/90 hover:text-white transition-all duration-300 gap-3"
           >
             <Icon name="document" size="30"></Icon>
             <h1
@@ -99,7 +104,7 @@
             </p>
           </div>
           <div
-            class="group flex flex-col justify-between items-start px-5 py-10 bg-green-700/5 shadow-md rounded-3xl cursor-pointer border-2 border-green-700/20 text-green-700 hover:bg-green-700 hover:text-white transition-all duration-300"
+            class="group flex flex-col justify-between items-start p-5 sm:p-6 lg:py-10 bg-green-700/5 shadow-md rounded-2xl sm:rounded-3xl cursor-pointer border-2 border-green-700/20 text-green-700 hover:bg-green-700 hover:text-white transition-all duration-300 gap-3"
           >
             <Icon name="history" size="30"></Icon>
             <h1
@@ -112,7 +117,7 @@
             </p>
           </div>
           <div
-            class="group flex flex-col justify-between items-start px-5 py-10 bg-yellow-700/5 shadow-md rounded-3xl cursor-pointer border-2 border-yellow-700/20 text-yellow-700 hover:bg-yellow-700 hover:text-white transition-all duration-300"
+            class="group flex flex-col justify-between items-start p-5 sm:p-6 lg:py-10 bg-yellow-700/5 shadow-md rounded-2xl sm:rounded-3xl cursor-pointer border-2 border-yellow-700/20 text-yellow-700 hover:bg-yellow-700 hover:text-white transition-all duration-300 gap-3 sm:col-span-2 lg:col-span-1"
           >
             <Icon name="start-2" size="30"></Icon>
             <h1
@@ -128,11 +133,11 @@
       </div>
       <!--Ca thi gần đây-->
       <div>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between gap-2">
           <span class="text-xl text-black/80 font-bold">Ca thi gần đây</span>
           <router-link
             to="/student/my-sessions"
-            class="text-primary font-medium cursor-pointer hover:underline transiton-all duration-200"
+            class="text-primary font-medium cursor-pointer hover:underline transiton-all duration-200 shrink-0"
             >Xem tất cả</router-link
           >
         </div>
@@ -141,22 +146,22 @@
           <div
             v-for="(session, index) in listSession"
             :key="index"
-            class="mt-5 flex flex-col gap-4 bg-white px-4 py-5 border-l-4 border-secondary rounded-xl shadow-lg"
+            class="mt-4 sm:mt-5 flex flex-col gap-3 sm:gap-4 bg-white p-4 sm:py-5 border-l-4 border-secondary rounded-xl shadow-lg"
           >
-            <div class="flex items-center justify-between">
-              <h1 class="font-bold text-black/80">{{ session.title }}</h1>
+            <div class="flex items-center justify-between gap-2">
+              <h1 class="font-bold text-black/80 truncate">{{ session.title }}</h1>
               <div
-                class="text-[10px] bg-secondary/20 p-1 rounded-sm uppercase text-secondary font-bold"
+                class="text-[10px] bg-secondary/20 p-1 rounded-sm uppercase text-secondary font-bold shrink-0"
               >
                 {{ session.status }}
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <Icon name="clock" size="20"></Icon>
+              <Icon name="clock" size="20" class="shrink-0"></Icon>
               <span class="text-sm text-black/70">{{ session.time }}</span>
             </div>
             <div class="flex items-center gap-2">
-              <Icon name="calendar-alt" size="20"></Icon>
+              <Icon name="calendar-alt" size="20" class="shrink-0"></Icon>
               <span class="text-sm text-black/70">{{ session.date }}</span>
             </div>
             <Button variant="secondary" class="w-full">Chi tiết ca thi</Button>

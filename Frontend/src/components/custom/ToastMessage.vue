@@ -12,7 +12,12 @@
         <span class="text-sm font-medium" :class="theme.text">{{ content }}</span>
       </p>
 
-      <Icon name="x" color="gray" class="ml-auto cursor-pointer hover:opacity-70" @click="close"></Icon>
+      <Icon
+        name="x"
+        color="gray"
+        class="ml-auto cursor-pointer hover:opacity-70"
+        @click="close"
+      ></Icon>
     </div>
   </transition>
 </template>
@@ -48,28 +53,28 @@ const themeConfig = {
     wrapper: 'border-blue-200 bg-[#E3F2FD]',
     label: 'text-blue-800',
     text: 'text-blue-700/90',
-    icon: 'info-circle', // Bạn nhớ đổi tên icon cho khớp với hệ thống của bạn nhé
-    iconColor: '#1d4ed8', // blue-700
+    icon: 'info-circle',
+    iconColor: '#1d4ed8',
   },
   success: {
     wrapper: 'border-[#297A2D]/30 bg-[#E8F5E9]',
     label: 'text-green-800',
     text: 'text-green-700/90',
-    icon: 'check-circle', // Nhớ đổi tên icon
-    iconColor: '#15803d', // green-700
+    icon: 'check-circle',
+    iconColor: '#15803d',
   },
   warning: {
     wrapper: 'border-yellow-300 bg-[#FFF9C4]',
     label: 'text-yellow-800',
     text: 'text-yellow-700/90',
-    icon: 'warning-basic', // Nhớ đổi tên icon
-    iconColor: '#a16207', // yellow-700
+    icon: 'warning-basic',
+    iconColor: '#a16207',
   },
   error: {
     wrapper: 'border-red-200 bg-[#FFEBEE]',
     label: 'text-[#c81a1a]',
     text: 'text-[#c81a1a]/90',
-    icon: 'block', // Nhớ đổi tên icon
+    icon: 'block',
     iconColor: '#c81a1a',
   },
 }
@@ -98,7 +103,7 @@ watch(
       }, 3000)
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 onUnmounted(() => {
